@@ -1,12 +1,12 @@
 Param(
     [parameter(Mandatory = $true)]
-    [string]$website_name,
-    [parameter(Mandatory = $true)]
     [string]$app_name,
     [parameter(Mandatory = $true)]
     [string]$app_pool_name,
     [parameter(Mandatory = $true)]
-    [string]$physical_path
+    [string]$physical_path,
+    [parameter(Mandatory = $true)]
+    [string]$website_name
 )
 
 # Import module for creating webapp on IIS

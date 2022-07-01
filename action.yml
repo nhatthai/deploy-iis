@@ -8,17 +8,14 @@ inputs:
   website_name:
     description: "IIS website name"
     required: true
+  app_name:
+    description: "IIS App name"
+    required: true
   app_pool_name:
     description: "Application Pool Name"
     required: true
   physical_path:
     description: "The path to the source directory that will be deployed"
-    required: true
-  user_service:
-    description: "Username Service"
-    required: true
-  password_service:
-    description: "Password Service"
     required: true
 runs:
   using: "composite"
@@ -31,5 +28,3 @@ runs:
         ${{ inputs.app_name }}
         ${{ inputs.app_pool_name }}
         ${{ inputs.physical_path }}
-        ${{ inputs.user_service }}
-        ${{ inputs.password_service }}

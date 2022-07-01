@@ -24,7 +24,7 @@ runs:
       shell: powershell
       run: >
         ${{ github.action_path }}/scripts/iss_action.ps1
-        ${{ inputs.website_name }}
         ${{ inputs.app_name }}
         ${{ inputs.app_pool_name }}
         ${{ inputs.physical_path }}
+        ${{ inputs.website_name }}

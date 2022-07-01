@@ -45,6 +45,6 @@ else {
 }
 
 # Create New WebApplication
-New-WebApplication $app_name -Site $website_name -ApplicationPool $app_pool_name  -PhysicalPath $physical_path;
+New-WebApplication "$app_name" -Site "$website_name" -ApplicationPool "$app_pool_name"  -PhysicalPath "$physical_path";
 
 Write-Output "Deploy WebApp sucessfully"

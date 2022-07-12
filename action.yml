@@ -5,6 +5,7 @@ branding:
   icon: upload-cloud
   color: blue
 inputs:
+  app_name:
     description: "IIS App name"
     required: true
   app_pool_name:

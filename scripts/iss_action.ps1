@@ -5,7 +5,7 @@ Param(
     [string]$app_pool_name,
     [parameter(Mandatory = $true)]
     [string]$physical_path,
-    [string]$website_name = "Default Web Site",
+
     [string]$user_service = "",
     [string]$password_service = ""
 )
@@ -52,7 +52,7 @@ if (($user_service.ToString() -eq "") -or ($password_service.ToString() -eq ""))
 else
 {
     Write-Output "Set property for $app_pool_name"
-    Set-ItemProperty iIIS:\AppPools\$app_pool_name -name processModel -value @{userName=$user_service;password=$password_service;identitytype=3}
+    Set-ItemProperty IIS:\AppPools\$app_pool_name -name processModel -value @{userName=$user_service;password=$password_service;identitytype=3}
 }
 
 # Create New WebApplication

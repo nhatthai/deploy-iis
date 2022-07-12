@@ -7,7 +7,7 @@ Param(
     [string]$physical_path,
     [string]$website_name = "Default Web Site",
     [string]$user_service = "",
-    [SecureString]$password_service = "",
+    [SecureString]$password_service = ""
 )
 
 # Import module for creating webapp on IIS
@@ -19,10 +19,12 @@ if ($physical_path.ToString() -eq "")
 }
 
 # create app pool if it doesn't exist
-if (Get-IISAppPool -Name $app_pool_name) {
+if (Get-IISAppPool -Name $app_pool_name)
+{
     Write-Output "The App Pool $app_pool_name already exists"
 }
-else {
+else
+{
     Write-Output "Creating app pool $app_pool_name"
     $app_pool = New-WebAppPool -Name $app_pool_name
     $app_pool.autoStart = $true
@@ -32,18 +34,23 @@ else {
 }
 
  # create the folder if it doesn't exist
-if (Test-path $physical_path) {
+if (Test-path $physical_path)
+{
     Write-Output "The folder $physical_path already exists"
 }
-else {
+else
+{
     New-Item -ItemType Directory -Path $physical_path -Force
     Write-Output "Created folder $physical_path"
 }
 
 # Run as the user(set service account)
-if ($user_service.ToString() -eq "" or $password_service.ToString() -eq ""){
+if ($user_service.ToString() -eq "" or $password_service.ToString() -eq "")
+{
     Write-Output "Do not set property for $app_pool_name"
-} else {
+}
+else
+{
     Write-Output "Set property for $app_pool_name"
     Set-ItemProperty iIIS:\AppPools\$app_pool_name -name processModel -value @{userName=$user_service;password=$password_service;identitytype=3}
 }

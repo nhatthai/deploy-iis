@@ -5,7 +5,7 @@ Param(
     [string]$app_pool_name,
     [parameter(Mandatory = $true)]
     [string]$physical_path,
-
+    [string]$website_name = "Default Web Site",
     [string]$user_service = "",
     [string]$password_service = ""
 )

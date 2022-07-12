@@ -45,7 +45,7 @@ else
 }
 
 # Run as the user(set service account)
-if ($user_service.ToString() -eq "" or $password_service.ToString() -eq "")
+if (($user_service.ToString() -eq "") or ($password_service.ToString() -eq ""))
 {
     Write-Output "Do not set property for $app_pool_name"
 }

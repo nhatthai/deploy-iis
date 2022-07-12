@@ -5,7 +5,9 @@ Param(
     [string]$app_pool_name,
     [parameter(Mandatory = $true)]
     [string]$physical_path,
-    [string]$website_name = "Default Web Site"
+    [string]$website_name = "Default Web Site",
+    [string]$user_service = "",
+    [SecureString]$password_service = "",
 )
 
 # Import module for creating webapp on IIS
@@ -36,6 +38,14 @@ if (Test-path $physical_path) {
 else {
     New-Item -ItemType Directory -Path $physical_path -Force
     Write-Output "Created folder $physical_path"
+}
+
+# Run as the user(set service account)
+if ($user_service.ToString() -eq "" or $password_service.ToString() -eq ""){
+    Write-Output "Do not set property for $app_pool_name"
+} else {
+    Write-Output "Set property for $app_pool_name"
+    Set-ItemProperty iIIS:\AppPools\$app_pool_name -name processModel -value @{userName=$user_service;password=$password_service;identitytype=3}
 }
 
 # Create New WebApplication

@@ -5,10 +5,6 @@ branding:
   icon: upload-cloud
   color: blue
 inputs:
-  website_name:
-    description: "IIS website name"
-    required: true
-  app_name:
     description: "IIS App name"
     required: true
   app_pool_name:
@@ -17,6 +13,12 @@ inputs:
   physical_path:
     description: "The path to the source directory that will be deployed"
     required: true
+  website_name:
+    description: "IIS website name"
+  user_service:
+    description: "User Service Account"
+  password_service:
+    description: "Password Service Account"
 runs:
   using: "composite"
   steps:
@@ -28,3 +30,5 @@ runs:
         ${{ inputs.app_pool_name }}
         ${{ inputs.physical_path }}
         ${{ inputs.website_name }}
+        ${{ inputs.user_service }}
+        ${{ inputs.password_service }}

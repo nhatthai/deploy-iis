@@ -5,7 +5,7 @@ Param(
     [string]$app_pool_name,
     [parameter(Mandatory = $true)]
     [string]$physical_path,
-    [string]$website_name = "Default Web Site",
+    [string]$website_name = "",
     [string]$user_service = "",
     [string]$password_service = ""
 )
@@ -13,9 +13,16 @@ Param(
 # Import module for creating webapp on IIS
 Import-Module WebAdministration;
 
+# set Default value
 if ($physical_path.ToString() -eq "")
 {
     $physical_path = "C:\inetpub\wwwroot\";
+}
+
+# set Default value
+if ($website_name.ToString() -eq "")
+{
+    $website_name = "Default Web Site";
 }
 
 # create app pool if it doesn't exist

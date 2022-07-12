@@ -7,7 +7,7 @@ Param(
     [string]$physical_path,
     [string]$website_name = "Default Web Site",
     [string]$user_service = "",
-    [SecureString]$password_service = ""
+    [string]$password_service = ""
 )
 
 # Import module for creating webapp on IIS

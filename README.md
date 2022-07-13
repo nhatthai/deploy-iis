@@ -14,5 +14,5 @@ This action will be deploy the Web App on IIS Website. It is using the Powershel
         password_service: ''
 ```
 
-The app_name, app_pool_name, physical_path are required
-The website_name, user_service, password_service default are empty.
+      The app_name, app_pool_name, physical_path are required.
+      The website_name, user_service, password_service default are empty.

@@ -12,8 +12,8 @@ Param(
     [parameter(Mandatory = $true)]
     [SecureString]$deploy_user_secret
     [string]$website_name = "",
-    [string]$user_service = "",
-    [string]$password_service = ""
+    [string]$app_pool_user_service = "",
+    [string]$app_pool_password_service = ""
 )
 
 # Import module for creating webapp on IIS
@@ -22,7 +22,7 @@ Import-Module WebAdministration;
 $credential = [PSCredential]::new($deploy_user_id, $deploy_user_secret)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
-$app_pool_credential = [PSCredential]::new($app_pool_user_id, $app_pool_user_secret)
+$app_pool_credential = [PSCredential]::new($app_pool_user_service, $app_pool_password_service)
 $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
 
 
@@ -66,7 +66,7 @@ $script = {
     }
 
     # Run as the user(set service account)
-    if (($user_service.ToString() -eq "") -or ($password_service.ToString() -eq ""))
+    if (($app_pool_user_id.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
     {
         Write-Output "Do not set property for $app_pool_name"
     }

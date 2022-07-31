@@ -5,6 +5,9 @@ branding:
   icon: upload-cloud
   color: blue
 inputs:
+  server:
+    description: "IP or ComputerName server remotely"
+    required: true
   app_name:
     description: "IIS App name"
     required: true
@@ -14,11 +17,17 @@ inputs:
   physical_path:
     description: "The path to the source directory that will be deployed"
     required: true
+  deploy_user_id:
+    description: "UserName login the remote server"
+    required: true
+  deploy_user_secret:
+    description: "Password login the remote server"
+    required: true
   website_name:
     description: "IIS website name"
-  user_service:
+  app_pool_user_service:
     description: "User Service Account"
-  password_service:
+  app_pool_password_service:
     description: "Password Service Account"
 runs:
   using: "composite"
@@ -27,9 +36,12 @@ runs:
       shell: powershell
       run: >
         ${{ github.action_path }}/scripts/iss_action.ps1
+        '${{ inputs.server }}'
         '${{ inputs.app_name }}'
         '${{ inputs.app_pool_name }}'
         '${{ inputs.physical_path }}'
+        '${{ inputs.deploy_user_id }}'
+        '${{ inputs.deploy_user_secret }}'
         '${{ inputs.website_name }}'
         '${{ inputs.user_service }}'
         '${{ inputs.password_service }}'

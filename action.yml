@@ -43,5 +43,5 @@ runs:
         '${{ inputs.deploy_user_id }}'
         '${{ inputs.deploy_user_secret }}'
         '${{ inputs.website_name }}'
-        '${{ inputs.user_service }}'
-        '${{ inputs.password_service }}'
+        '${{ inputs.app_pool_user_service }}'
+        '${{ inputs.app_pool_password_service }}'

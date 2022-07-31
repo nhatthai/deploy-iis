@@ -19,8 +19,10 @@ Param(
 # Import module for creating webapp on IIS
 Import-Module WebAdministration;
 
-#$SecurePassword = ConvertTo-SecureString $deploy_user_secret –asplaintext –force
-$credential = [PSCredential]::new($deploy_user_id, $deploy_user_secret)
+Write-Output "Create Credential"
+
+$SecurePassword = ConvertTo-SecureString $deploy_user_secret -AsPlainText -Force
+$credential = [PSCredential]::new($deploy_user_id, $SecurePassword)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
 $app_pool_credential = [PSCredential]::new($app_pool_user_service, $app_pool_password_service)

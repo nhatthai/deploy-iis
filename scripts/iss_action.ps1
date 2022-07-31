@@ -22,10 +22,10 @@ Import-Module WebAdministration;
 Write-Output "Create Credential"
 
 $SecurePassword = ConvertTo-SecureString $deploy_user_secret -AsPlainText -Force
-$credential = [PSCredential]::new($deploy_user_id, $SecurePassword)
+$credential = = New-Object System.Management.Automation.PSCredential($deploy_user_id, $SecurePassword)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
-$app_pool_credential = [PSCredential]::new($app_pool_user_service, $app_pool_password_service)
+$app_pool_credential = New-Object System.Management.Automation.PSCredential($app_pool_user_service, $app_pool_password_service)
 $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
 
 Write-Output "Starting Deploy WebApp"

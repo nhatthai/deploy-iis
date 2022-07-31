@@ -66,14 +66,14 @@ $script = {
     }
 
     # Run as the user(set service account)
-    if (($app_pool_user_id.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
+    if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
     {
         Write-Output "Do not set property for $app_pool_name"
     }
     else
     {
         Write-Output "Set property for $app_pool_name"
-        Set-ItemProperty IIS:\AppPools\$app_pool_name -name processModel -value @{userName=$user_service;password=$set_app_pool_secret;identitytype=3}
+        Set-ItemProperty IIS:\AppPools\$app_pool_name -name processModel -value @{userName=$app_pool_user_service;password=$set_app_pool_secret;identitytype=3}
     }
 
     # Create New WebApplication

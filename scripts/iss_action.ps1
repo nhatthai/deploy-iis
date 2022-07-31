@@ -45,6 +45,7 @@ $script = {
         $website_name = "Default Web Site";
     }
 
+    Write-Output "Create Application Pool"
     # create app pool if it doesn't exist
     if (Get-IISAppPool -Name $app_pool_name)
     {
@@ -60,6 +61,7 @@ $script = {
         Write-Output "App pool $app_pool_name has been created"
     }
 
+    Write-Output "Create Folder of Web App"
     # create the folder if it doesn't exist
     if (Test-path $physical_path)
     {
@@ -72,22 +74,22 @@ $script = {
     }
 
     # Run as the user(set service account)
-    if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
-    {
-        Write-Output "Do not set property for $app_pool_name"
-    }
-    else
-    {
-        Write-Output "Set property for $app_pool_name"
-        Set-ItemProperty IIS:\AppPools\$app_pool_name -name processModel -value @{userName=$app_pool_user_service;password=$set_app_pool_secret;identitytype=3}
-    }
+    # if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
+    # {
+    #     Write-Output "Do not set property for $app_pool_name"
+    # }
+    # else
+    # {
+    #     Write-Output "Set property for $app_pool_name"
+    #     Set-ItemProperty IIS:\AppPools\$app_pool_name -name processModel -value @{userName=$app_pool_user_service;password=$set_app_pool_secret;identitytype=3}
+    # }
 
-    # Create New WebApplication
-    New-WebApplication "$app_name" -Site "$website_name" -ApplicationPool "$app_pool_name"  -PhysicalPath "$physical_path" -Force;
+    # # Create New WebApplication
+    # New-WebApplication "$app_name" -Site "$website_name" -ApplicationPool "$app_pool_name"  -PhysicalPath "$physical_path" -Force;
 
-    Write-Output "Deploy WebApp sucessfully"
+    # Write-Output "Deploy WebApp sucessfully"
 }
 
-Invoke-Command -ComputerName $server -Credential $credential -UseSSL -SessionOption $so  -ScriptBlock $script
+Invoke-Command -ComputerName $server -Credential $credential -UseSSL -SessionOption $so -ScriptBlock $script
 
 Write-Output "IIS Site Created"

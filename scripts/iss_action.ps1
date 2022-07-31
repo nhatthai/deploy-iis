@@ -88,10 +88,6 @@ $script = {
     Write-Output "Deploy WebApp sucessfully"
 }
 
-Invoke-Command -ComputerName $server `
-    -Credential $credential `
-    -UseSSL `
-    -SessionOption $so `
-    -ScriptBlock $script
+Invoke-Command -ComputerName $server -Credential $credential -UseSSL -SessionOption $so  -ScriptBlock $script
 
 Write-Output "IIS Site Created"

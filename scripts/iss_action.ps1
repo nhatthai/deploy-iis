@@ -10,7 +10,7 @@ Param(
     [parameter(Mandatory = $true)]
     [string]$deploy_user_id,
     [parameter(Mandatory = $true)]
-    [SecureString]$deploy_user_secret
+    [SecureString]$deploy_user_secret,
     [string]$website_name = "",
     [string]$app_pool_user_service = "",
     [string]$app_pool_password_service = ""

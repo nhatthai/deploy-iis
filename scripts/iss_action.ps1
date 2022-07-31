@@ -74,16 +74,14 @@ $script = {
     }
 
     # Run as the user(set service account)
-    Write-Output "Set property for $Using:app_pool_name"
-    Set-ItemProperty IIS:\AppPools\$Using:app_pool_name -name processModel -value @{userName=$Using:app_pool_user_service;password=$Using:set_app_pool_secret;identitytype=3}
+    #Write-Output "Set property for $Using:app_pool_name"
+    #Set-ItemProperty IIS:\AppPools\$Using:app_pool_name -name processModel -value @{userName=$Using:app_pool_user_service;password=$Using:set_app_pool_secret;identitytype=3}
 
     # Create New WebApplication
     New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
 
     Write-Output "Deploy WebApp sucessfully"
 }
-
-Write-Output "Starting Deploy WebApp"
 
 Invoke-Command -ComputerName $server -Credential $credential -UseSSL -SessionOption $so -ScriptBlock $script
 

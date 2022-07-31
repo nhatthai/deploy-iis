@@ -30,7 +30,6 @@ Write-Output "Create App Pool Credential"
 $app_pool_credential = New-Object System.Management.Automation.PSCredential($app_pool_user_service, $PasswordService)
 $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
 
-Write-Output "Starting Deploy WebApp"
 
 $script = {
     # set Default value
@@ -61,17 +60,17 @@ $script = {
         Write-Output "App pool $app_pool_name has been created"
     }
 
-    Write-Output "Create Folder of Web App"
-    # create the folder if it doesn't exist
-    if (Test-path $physical_path)
-    {
-        Write-Output "The folder $physical_path already exists"
-    }
-    else
-    {
-        New-Item -ItemType Directory -Path $physical_path -Force
-        Write-Output "Created folder $physical_path"
-    }
+    # Write-Output "Create Folder of Web App"
+    # # create the folder if it doesn't exist
+    # if (Test-path $physical_path)
+    # {
+    #     Write-Output "The folder $physical_path already exists"
+    # }
+    # else
+    # {
+    #     New-Item -ItemType Directory -Path $physical_path -Force
+    #     Write-Output "Created folder $physical_path"
+    # }
 
     # Run as the user(set service account)
     # if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
@@ -89,6 +88,8 @@ $script = {
 
     # Write-Output "Deploy WebApp sucessfully"
 }
+
+Write-Output "Starting Deploy WebApp"
 
 Invoke-Command -ComputerName $server -Credential $credential -UseSSL -SessionOption $so -ScriptBlock $script
 

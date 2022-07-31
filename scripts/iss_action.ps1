@@ -22,7 +22,7 @@ Import-Module WebAdministration;
 Write-Output "Create Credential"
 
 $SecurePassword = ConvertTo-SecureString $deploy_user_secret -AsPlainText -Force
-$credential = = New-Object System.Management.Automation.PSCredential($deploy_user_id, $SecurePassword)
+$credential = New-Object System.Management.Automation.PSCredential($deploy_user_id, $SecurePassword)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
 $app_pool_credential = New-Object System.Management.Automation.PSCredential($app_pool_user_service, $app_pool_password_service)

@@ -30,22 +30,21 @@ Write-Output "Create App Pool Credential"
 $app_pool_credential = New-Object System.Management.Automation.PSCredential($app_pool_user_service, $PasswordService)
 $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
 
+Write-Output "Create Default values"
+
+# set Default value
+if ($physical_path.ToString() -eq "")
+{
+    $physical_path = "C:\inetpub\wwwroot\";
+}
+
+# set Default value
+if ($website_name.ToString() -eq "")
+{
+    $website_name = "Default Web Site";
+}
 
 $script = {
-    Write-Output "Create Default values"
-
-    # set Default value
-    if ($physical_path.ToString() -eq "")
-    {
-        $physical_path = "C:\inetpub\wwwroot\";
-    }
-
-    # set Default value
-    if ($website_name.ToString() -eq "")
-    {
-        $website_name = "Default Web Site";
-    }
-
     Write-Output "Create Application Pool"
     # create app pool if it doesn't exist
     if (Get-IISAppPool -Name $Using:app_pool_name)
@@ -75,7 +74,7 @@ $script = {
     }
 
     # Run as the user(set service account)
-    if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
+    if (($Using:app_pool_user_service.ToString() -eq "") -or ($Using:app_pool_password_service.ToString() -eq ""))
     {
         Write-Output "Do not set property for $Using:app_pool_name"
     }

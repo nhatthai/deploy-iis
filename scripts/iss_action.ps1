@@ -74,7 +74,7 @@ $script = {
     }
 
     # Run as the user(set service account)
-    if (($Using:app_pool_user_service.ToString() -eq "") -or ($Using:app_pool_password_service.ToString() -eq ""))
+    if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
     {
         Write-Output "Do not set property for $Using:app_pool_name"
     }

@@ -48,47 +48,19 @@ $script = {
 
     Write-Output "Create Application Pool"
     # create app pool if it doesn't exist
-    # if (Get-IISAppPool -Name $app_pool_name)
-    # {
-    #     Write-Output "The App Pool $app_pool_name already exists"
-    # }
-    # else
-    # {
-    #     Write-Output "Creating app pool $app_pool_name"
-    #     $app_pool = New-WebAppPool -Name $app_pool_name
-    #     $app_pool.autoStart = $true
-    #     $app_pool.managedPipelineMode = "Integrated"
-    #     $app_pool | Set-Item
-    #     Write-Output "App pool $app_pool_name has been created"
-    # }
-
-    # Write-Output "Create Folder of Web App"
-    # # create the folder if it doesn't exist
-    # if (Test-path $physical_path)
-    # {
-    #     Write-Output "The folder $physical_path already exists"
-    # }
-    # else
-    # {
-    #     New-Item -ItemType Directory -Path $physical_path -Force
-    #     Write-Output "Created folder $physical_path"
-    # }
-
-    # Run as the user(set service account)
-    # if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
-    # {
-    #     Write-Output "Do not set property for $app_pool_name"
-    # }
-    # else
-    # {
-    #     Write-Output "Set property for $app_pool_name"
-    #     Set-ItemProperty IIS:\AppPools\$app_pool_name -name processModel -value @{userName=$app_pool_user_service;password=$set_app_pool_secret;identitytype=3}
-    # }
-
-    # # Create New WebApplication
-    # New-WebApplication "$app_name" -Site "$website_name" -ApplicationPool "$app_pool_name"  -PhysicalPath "$physical_path" -Force;
-
-    # Write-Output "Deploy WebApp sucessfully"
+    if (Get-IISAppPool -Name $app_pool_name)
+    {
+        Write-Output "The App Pool $app_pool_name already exists"
+    }
+    else
+    {
+        Write-Output "Creating app pool $app_pool_name"
+        $app_pool = New-WebAppPool -Name $app_pool_name
+        $app_pool.autoStart = $true
+        $app_pool.managedPipelineMode = "Integrated"
+        $app_pool | Set-Item
+        Write-Output "App pool $app_pool_name has been created"
+    }
 }
 
 Write-Output "Starting Deploy WebApp"

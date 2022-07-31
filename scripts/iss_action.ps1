@@ -26,6 +26,7 @@ $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 $app_pool_credential = [PSCredential]::new($app_pool_user_service, $app_pool_password_service)
 $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
 
+Write-Output "Starting Deploy WebApp"
 
 $script = {
     # set Default value

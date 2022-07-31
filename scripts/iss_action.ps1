@@ -35,13 +35,13 @@ $script = {
     Write-Output "Create Default values"
 
     # set Default value
-    if ($Using:physical_path.ToString() -eq "")
+    if ($physical_path.ToString() -eq "")
     {
         $physical_path = "C:\inetpub\wwwroot\";
     }
 
     # set Default value
-    if ($Using:website_name.ToString() -eq "")
+    if ($website_name.ToString() -eq "")
     {
         $website_name = "Default Web Site";
     }
@@ -56,9 +56,9 @@ $script = {
     {
         Write-Output "Creating app pool $Using:app_pool_name"
         $app_pool = New-WebAppPool -Name $Using:app_pool_name
-        $Using:app_pool.autoStart = $true
-        $Using:app_pool.managedPipelineMode = "Integrated"
-        $Using:app_pool | Set-Item
+        $app_pool.autoStart = $true
+        $app_pool.managedPipelineMode = "Integrated"
+        $app_pool | Set-Item
         Write-Output "App pool $Using:app_pool_name has been created"
     }
 
@@ -74,8 +74,8 @@ $script = {
         Write-Output "Created folder $Using:physical_path"
     }
 
-    Run as the user(set service account)
-    if (($Using:app_pool_user_service.ToString() -eq "") -or ($Using:app_pool_password_service.ToString() -eq ""))
+    # Run as the user(set service account)
+    if (($app_pool_user_service.ToString() -eq "") -or ($app_pool_password_service.ToString() -eq ""))
     {
         Write-Output "Do not set property for $Using:app_pool_name"
     }

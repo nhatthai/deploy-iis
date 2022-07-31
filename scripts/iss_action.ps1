@@ -32,6 +32,8 @@ $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
 
 
 $script = {
+    Write-Output "Create Default values"
+
     # set Default value
     if ($physical_path.ToString() -eq "")
     {
@@ -46,19 +48,19 @@ $script = {
 
     Write-Output "Create Application Pool"
     # create app pool if it doesn't exist
-    if (Get-IISAppPool -Name $app_pool_name)
-    {
-        Write-Output "The App Pool $app_pool_name already exists"
-    }
-    else
-    {
-        Write-Output "Creating app pool $app_pool_name"
-        $app_pool = New-WebAppPool -Name $app_pool_name
-        $app_pool.autoStart = $true
-        $app_pool.managedPipelineMode = "Integrated"
-        $app_pool | Set-Item
-        Write-Output "App pool $app_pool_name has been created"
-    }
+    # if (Get-IISAppPool -Name $app_pool_name)
+    # {
+    #     Write-Output "The App Pool $app_pool_name already exists"
+    # }
+    # else
+    # {
+    #     Write-Output "Creating app pool $app_pool_name"
+    #     $app_pool = New-WebAppPool -Name $app_pool_name
+    #     $app_pool.autoStart = $true
+    #     $app_pool.managedPipelineMode = "Integrated"
+    #     $app_pool | Set-Item
+    #     Write-Output "App pool $app_pool_name has been created"
+    # }
 
     # Write-Output "Create Folder of Web App"
     # # create the folder if it doesn't exist

@@ -10,7 +10,7 @@ Param(
     [parameter(Mandatory = $true)]
     [string]$deploy_user_id,
     [parameter(Mandatory = $true)]
-    [SecureString]$deploy_user_secret,
+    [string]$deploy_user_secret,
     [string]$website_name = "",
     [string]$app_pool_user_service = "",
     [string]$app_pool_password_service = ""
@@ -19,6 +19,7 @@ Param(
 # Import module for creating webapp on IIS
 Import-Module WebAdministration;
 
+#$SecurePassword = ConvertTo-SecureString $deploy_user_secret –asplaintext –force
 $credential = [PSCredential]::new($deploy_user_id, $deploy_user_secret)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 

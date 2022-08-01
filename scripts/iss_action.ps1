@@ -92,6 +92,6 @@ $script = {
 
 Invoke-Command -ComputerName $server `
     -Credential $credential -UseSSL -SessionOption $so `
-    -ScriptBlock $script
+    -ScriptBlock $script -ErrorAction SilentlyContinue
 
 Write-Output "IIS Site Created"

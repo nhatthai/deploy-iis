@@ -81,7 +81,7 @@ $script = {
     if ($Using:source_physical_path.Length -gt 0)
     {
         Write-Output "Copy source code from source $Using:source_physical_path to $Using:physical_path"
-        Copy-Item "$Using:source_physical_path" -Destination "$Using:physical_path"  -Recurse -Verbose
+        Copy-Item -Path "$Using:source_physical_path\*" -Destination "$Using:physical_path" -Recurse -Verbose
     }
 
     # Run as the user(set service account)

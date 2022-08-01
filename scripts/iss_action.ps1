@@ -25,12 +25,14 @@ Write-Output "Create Credential"
 $credential = New-Object System.Management.Automation.PSCredential($deploy_user_id, $SecurePassword)
 $so = New-PSSessionOption -SkipCACheck -SkipCNCheck -SkipRevocationCheck
 
-Write-Output "Create App Pool Credential"
-[System.Security.SecureString]$PasswordService = ConvertTo-SecureString $app_pool_password_service -AsPlainText -Force
-$app_pool_credential = New-Object System.Management.Automation.PSCredential($app_pool_user_service, $PasswordService)
-$set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
+if (($app_pool_user_service.Length -gt 0) -and ($app_pool_password_service.Length -gt 0)) {
+    Write-Output "Create App Pool Credential"
+    [System.Security.SecureString]$PasswordService = ConvertTo-SecureString $app_pool_password_service -AsPlainText -Force
+    $app_pool_credential = New-Object System.Management.Automation.PSCredential($app_pool_user_service, $PasswordService)
+    $set_app_pool_secret = $app_pool_credential.GetNetworkCredential().Password
+}
 
-Write-Output "Create Default values"
+Write-Output "Set Default values"
 
 # set Default value
 if ($physical_path.ToString() -eq "")
@@ -46,6 +48,7 @@ if ($website_name.ToString() -eq "")
 
 $script = {
     Write-Output "Create Application Pool"
+
     # create app pool if it doesn't exist
     if (Get-IISAppPool -Name $Using:app_pool_name)
     {
@@ -72,6 +75,8 @@ $script = {
         New-Item -ItemType Directory -Path $Using:physical_path -Force
         Write-Output "Created folder $Using:physical_path"
     }
+
+    Copy-Item "$Using:physical_path" -Destination "$Using:physical_path"  -Recurse -Verbose
 
     # Run as the user(set service account)
     if (($Using:app_pool_user_service.Length -gt 0) -and ($Using:app_pool_password_service.Length -gt 0))

@@ -15,7 +15,7 @@ inputs:
     description: "Application Pool Name"
     required: true
   physical_path:
-    description: "The path to the source directory that will be deployed"
+    description: "The path to the destination directory that will be deployed"
     required: true
   deploy_user_id:
     description: "UserName login the remote server"
@@ -29,6 +29,8 @@ inputs:
     description: "User Service Account"
   app_pool_password_service:
     description: "Password Service Account"
+  source_physical_path:
+    description: "The source directory is built"
 runs:
   using: "composite"
   steps:
@@ -45,3 +47,4 @@ runs:
         '${{ inputs.website_name }}'
         '${{ inputs.app_pool_user_service }}'
         '${{ inputs.app_pool_password_service }}'
+        '${{ inputs.source_physical_path }}'

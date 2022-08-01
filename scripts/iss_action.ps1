@@ -13,7 +13,8 @@ Param(
     [string]$deploy_user_secret,
     [string]$website_name = "",
     [string]$app_pool_user_service = "",
-    [string]$app_pool_password_service = ""
+    [string]$app_pool_password_service = "",
+    [string]$source_physical_path = ""
 )
 
 # Import module for creating webapp on IIS
@@ -76,7 +77,12 @@ $script = {
         Write-Output "Created folder $Using:physical_path"
     }
 
-    Copy-Item "$Using:physical_path" -Destination "$Using:physical_path"  -Recurse -Verbose
+    # Copy source files from source to destination on IIS server
+    if ($Using:source_physical_path.Length -gt 0)
+    {
+        Write-Output "Copy source code from source $Using:source_physical_path to $Using:physical_path"
+        Copy-Item "$Using:source_physical_path" -Destination "$Using:physical_path"  -Recurse -Verbose
+    }
 
     # Run as the user(set service account)
     if (($Using:app_pool_user_service.Length -gt 0) -and ($Using:app_pool_password_service.Length -gt 0))

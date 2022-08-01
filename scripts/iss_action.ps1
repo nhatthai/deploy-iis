@@ -92,8 +92,6 @@ $script = {
     return true;
 }
 
-Write-Output "Starting Deploy WebApp"
-
 Invoke-Command -ComputerName $server `
     -Credential $credential -UseSSL -SessionOption $so `
     -ScriptBlock $script

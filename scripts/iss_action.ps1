@@ -88,8 +88,6 @@ $script = {
     New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
 
     Write-Output "Deploy WebApp sucessfully"
-
-    return true;
 }
 
 Invoke-Command -ComputerName $server `

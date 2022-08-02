@@ -13,7 +13,7 @@ Param(
     [string]$deploy_user_secret,
     [string]$website_name = "",
     [string]$app_pool_user_service = "",
-    [string]$app_pool_password_service = "",
+    [string]$app_pool_password_service = ""
 )
 
 # Import module for creating webapp on IIS

@@ -14,7 +14,6 @@ Param(
     [string]$website_name = "",
     [string]$app_pool_user_service = "",
     [string]$app_pool_password_service = "",
-    [string]$source_physical_path = ""
 )
 
 # Import module for creating webapp on IIS
@@ -75,13 +74,6 @@ $script = {
     {
         New-Item -ItemType Directory -Path $Using:physical_path -Force
         Write-Output "Created folder $Using:physical_path"
-    }
-
-    # Copy source files from source to destination on IIS server
-    if ($Using:source_physical_path.Length -gt 0)
-    {
-        Write-Output "Copy source code from source $Using:source_physical_path to $Using:physical_path"
-        Copy-Item -Path "$Using:source_physical_path\*" -Destination "$Using:physical_path" -Recurse
     }
 
     # Run as the user(set service account)

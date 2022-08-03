@@ -81,20 +81,18 @@ $script = {
     {
         Write-Output "Set property for $Using:app_pool_name"
         Set-ItemProperty IIS:\AppPools\$Using:app_pool_name -name processModel -value @{userName=$Using:app_pool_user_service;password=$Using:app_pool_password_service;identitytype=3}
+
+        # Create New WebApplication
+        New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
+
     }
     else
     {
-        Write-Output "Do not set property for $Using:app_pool_name"
+        Write-Output "Using DefaultAppPool for $Using:app_name app"
+
+        # Create New WebApplication
+        New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "DefaultAppPool"  -PhysicalPath "$Using:physical_path" -Force;
     }
-
-    # Create New WebApplication
-    New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
-
-    # New-WebSite -Name $Using:app_name `
-    #     -HostHeader $Using:website_host_header `
-    #     -Port 80 `
-    #     -PhysicalPath $Using:physical_path `
-    #     -ApplicationPool $Using:app_pool_name -Force
 
     Write-Output "Deploy WebApp sucessfully"
 }

@@ -80,6 +80,7 @@ $script = {
     if (($Using:app_pool_user_service.Length -gt 0) -and ($Using:app_pool_password_service.Length -gt 0))
     {
         Write-Output "Set property for $Using:app_pool_name"
+        Set-ItemProperty IIS:\AppPools\MySite -Name "managedRuntimeVersion" -Value "v4.0"
         Set-ItemProperty IIS:\AppPools\$Using:app_pool_name -name processModel -value @{userName=$Using:app_pool_user_service;password=$Using:app_pool_password_service;identitytype=3}
     }
     else

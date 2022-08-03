@@ -88,11 +88,18 @@ $script = {
     }
 
     # Create New WebApplication
-    New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
+    New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "DefaultAppPool"  -PhysicalPath "$Using:physical_path" -Force;
+
+    # New-WebSite -Name $Using:app_name `
+    #     -HostHeader $Using:website_host_header `
+    #     -Port 80 `
+    #     -PhysicalPath $Using:physical_path `
+    #     -ApplicationPool $Using:app_pool_name -Force
 
     Write-Output "Deploy WebApp sucessfully"
 }
 
-Invoke-Command -ComputerName $server -Credential $credential -UseSSL -SessionOption $so -ScriptBlock $script
+Invoke-Command -ComputerName $server -Credential $credential `
+    -UseSSL -SessionOption $so -ScriptBlock $script
 
 Write-Output "IIS Site Created"

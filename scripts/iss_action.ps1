@@ -88,7 +88,7 @@ $script = {
     }
 
     # Create New WebApplication
-    New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "DefaultAppPool"  -PhysicalPath "$Using:physical_path" -Force;
+    New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
 
     # New-WebSite -Name $Using:app_name `
     #     -HostHeader $Using:website_host_header `

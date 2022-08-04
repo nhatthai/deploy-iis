@@ -47,6 +47,19 @@ if ($website_name.ToString() -eq "")
 }
 
 $script = {
+    Write-Output "Create folder for Web App"
+
+    # create the folder if it doesn't exist
+    if (Test-path $Using:physical_path)
+    {
+        Write-Output "The folder $Using:physical_path already exists"
+    }
+    else
+    {
+        New-Item -ItemType Directory -Path $Using:physical_path -Force
+        Write-Output "Created folder $Using:physical_path"
+    }
+
     Write-Output "Create Application Pool"
 
     # create app pool if it doesn't exist
@@ -62,34 +75,27 @@ $script = {
         $app_pool.managedPipelineMode = "Integrated"
         $app_pool | Set-Item
         Write-Output "App pool $Using:app_pool_name has been created"
-    }
 
-    Write-Output "Create folder for Web App"
-    # create the folder if it doesn't exist
-    if (Test-path $Using:physical_path)
-    {
-        Write-Output "The folder $Using:physical_path already exists"
-    }
-    else
-    {
-        New-Item -ItemType Directory -Path $Using:physical_path -Force
-        Write-Output "Created folder $Using:physical_path"
+        # Run as the user(set service account)
+        if (($Using:app_pool_user_service.Length -gt 0) -and ($Using:app_pool_password_service.Length -gt 0))
+        {
+            Write-Output "Set property for $Using:app_pool_name"
+            Set-ItemProperty IIS:\AppPools\$Using:app_pool_name -name processModel -value @{userName=$Using:app_pool_user_service;password=$Using:app_pool_password_service;identitytype=3}
+        }
+        else
+        {
+            Write-Output "Using DefaultAppPool for $Using:app_name app"
+        }
     }
 
     # Run as the user(set service account)
     if (($Using:app_pool_user_service.Length -gt 0) -and ($Using:app_pool_password_service.Length -gt 0))
     {
-        Write-Output "Set property for $Using:app_pool_name"
-        Set-ItemProperty IIS:\AppPools\$Using:app_pool_name -name processModel -value @{userName=$Using:app_pool_user_service;password=$Using:app_pool_password_service;identitytype=3}
-
         # Create New WebApplication
         New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "$Using:app_pool_name"  -PhysicalPath "$Using:physical_path" -Force;
-
     }
     else
     {
-        Write-Output "Using DefaultAppPool for $Using:app_name app"
-
         # Create New WebApplication
         New-WebApplication "$Using:app_name" -Site "$Using:website_name" -ApplicationPool "DefaultAppPool"  -PhysicalPath "$Using:physical_path" -Force;
     }

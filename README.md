@@ -1,5 +1,5 @@
 # Deploy Web Application in IIS
-This action will be deploy the Web App on IIS Website. It is using the Powershell
+This action will be deployed a Web App on IIS Website. It is using the Powershell
 
 ### Required
 + The remote IIS server to accept WinRM management calls.
@@ -32,14 +32,14 @@ Disable-NetFirewallRule -DisplayName "Windows Remote Management (HTTP-In)"
 ```
 
 ### Usage
-+ The app_name, app_pool_name, physical_path are required.
-+ The website_name, app_pool_user_service, app_pool_password_service default are empty.
++ The server(IP/ComputerName), app_name, app_pool_name, physical_path, deploy_user_id, deploy_user_secret are required.
++ The website_name, app_pool_user_service, app_pool_password_service are empty as default.
   deploy_user_id: user for accessing in the remote server
   deploy_user_secret: password for accessing in the remote server
 
   ```
   - name: Deploy WebAPI with PowerShell
-    uses: nhatthai/deploy-iis@main
+    uses: nhatthai/iis-webapp@v0.1
     with:
       server: '${{ env.IIS_SERVER_COMPUTER_NAME }}'
       app_name: '${{ env.app_name }}'
